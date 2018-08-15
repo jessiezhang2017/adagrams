@@ -33,6 +33,17 @@ def uses_available_letters?(word_input, individual_letters)
   return true
 end
 
+def is_in_english_dict?(input)
+check = false
+File.foreach("assets/dictionary-english.csv") do |line|
+   if line.chomp == input.downcase
+     check = true
+     return check
+   end
+end
+return check
+end
+
 def score_word(word)
   letter_values = {"a" => 1, "b" => 3,"c" => 3, "d" => 2,"e" => 1, "f" => 4,
     "g" => 2, "h" => 4,"i" => 1, "j" => 8,"k" => 5, "l" => 1,"m" => 3,
@@ -45,4 +56,34 @@ def score_word(word)
       total_score += 8
     end
     return total_score
+end
+
+def highest_score_from(words)
+  word_scores = words.map do |word|
+    {word: word.upcase, score: score_word(word)}
+  end
+
+  max_score = word_scores.max_by {|x| x[:score]}[:score]
+  all_max_scores = word_scores.select do |word|
+    word[:score] == max_score
+  end
+
+  shortest_word_length = all_max_scores.min_by { |word| word[:word].length}[:word].length
+
+  shortest_words = all_max_scores.select do |word|
+    word[:word].length == shortest_word_length
+  end
+
+  max_equals_ten = all_max_scores.select do |x|
+    x[:word].length == 10
+  end
+
+  return max_equals_ten.length == 0? shortest_words.first : max_equals_ten.first
+    # same as above^:
+    # if max_equals_ten.length == 0
+    #   return shortest_words.first
+    # else
+    #   return max_equals_ten.first
+    # end
+
 end

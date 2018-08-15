@@ -26,6 +26,7 @@ describe 'Adagrams' do
     end
   end
 
+
   describe 'uses_available_letters? method' do
 
     it 'returns true if the submitted letters are valid against the drawn letters' do
@@ -81,7 +82,7 @@ describe 'Adagrams' do
     end
   end
 
-  xdescribe 'highest_score_from method' do
+  describe 'highest_score_from method' do
     it 'returns a hash that contains the word and score of best word in an array' do
       words = ['X', 'XX', 'XXX', 'XXXX']
       best_word = highest_score_from words
@@ -167,5 +168,38 @@ describe 'Adagrams' do
       expect(best_word[:word]).must_equal words.first
       expect(best_word[:score]).must_equal 18
     end
+  end
+
+  describe 'is in english dict? method' do
+    it 'returns true if submitted word is valid in dictionary' do
+      #Arrange
+      input = "horse"
+      #act
+      in_dictionary = is_in_english_dict?(input)
+      #Assert
+      expect(in_dictionary).must_equal true
+    end
+    it 'returns false if submitted word is not located in dictionary' do
+      input = "cealpit"
+
+      in_dictionary = is_in_english_dict?(input)
+
+      expect(in_dictionary).must_equal false
+    end
+    it 'returns false if submitted word is not located in dictionary' do
+      input = "ab$"
+
+      in_dictionary = is_in_english_dict?(input)
+
+      expect(in_dictionary).must_equal false
+    end
+    it 'accounts for input being upcase or downcase' do
+      input = "DolPhiN"
+
+      in_dictionary = is_in_english_dict?(input)
+
+      expect(in_dictionary).must_equal true
+    end
+
   end
 end
