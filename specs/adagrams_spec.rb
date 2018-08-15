@@ -200,6 +200,19 @@ describe 'Adagrams' do
 
       expect(in_dictionary).must_equal true
     end
+    it 'accounts for first word in dictionary' do
+      input = "a"
 
+      in_dictionary = is_in_english_dict?(input)
+
+      expect(in_dictionary).must_equal true
+    end
+    it 'accounts for last word in dictionary' do
+      input = "zwitterion"
+
+      in_dictionary = is_in_english_dict?(input)
+
+      expect(in_dictionary).must_equal true
+    end 
   end
 end
