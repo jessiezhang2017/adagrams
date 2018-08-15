@@ -34,14 +34,12 @@ def uses_available_letters?(word_input, individual_letters)
 end
 
 def is_in_english_dict?(input)
-check = false
-File.foreach("assets/dictionary-english.csv") do |line|
-   if line.chomp == input.downcase
-     check = true
-     return check
-   end
-end
-return check
+  File.foreach("assets/dictionary-english.csv") do |line|
+    if line.chomp == input.downcase
+      return true
+    end
+  end
+  return false
 end
 
 def score_word(word)
@@ -51,10 +49,11 @@ def score_word(word)
     "u" => 1, "v" => 4,"w" => 4, "x"=>8, "y" => 4,"z" => 10}
     word_divided = word.downcase.chars
     values = word_divided.map {|letter| letter_values[letter]}
+
     total_score = values.sum
-    if word.length >= 7 && word.length <= 10
-      total_score += 8
-    end
+
+    total_score += 8 if word.length >= 7 && word.length <= 10
+
     return total_score
 end
 
